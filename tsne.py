@@ -20,3 +20,19 @@ def visualize(txtfile):
     plt.xlim(-16, 16)
     plt.ylim(-15, 17)
     plt.show()
+
+from wordcloud import WordCloud, STOPWORDS
+def cloud(txtfile):
+    with open(txtfile) as f:
+        lines = f.readlines()
+        text = "".join(lines)
+    wordcloud = WordCloud(
+                          stopwords=STOPWORDS,
+                          width=1200,
+                          height=1000
+                          ).generate(text)
+    plt.imshow(wordcloud)
+    plt.axis('off')
+    plt.show()
+
+
