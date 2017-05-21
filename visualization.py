@@ -19,11 +19,13 @@ def visualize(txtfile):
     tsne = TSNE(n_components=2, random_state=0)
     np.set_printoptions(suppress=True)
     Y = tsne.fit_transform(vectors)
-    fig = plt.figure(figsize=(20, 20))
+    fig = plt.figure()
     plt.scatter(Y[:, 0], Y[:, 1])
     for label, x, y in zip(model.words, Y[:, 0], Y[:, 1]):
         plt.annotate(label, xy=(x, y), xytext=(0, 0), textcoords='offset points')
     fig.savefig(txtfile[:-4]+'1'+'.png')
+
+
 
 def cloud(txtfile):
     with open(txtfile) as f:
@@ -52,7 +54,8 @@ def histogram(txtfile):
     final = dict((k, v) for k, v in wordcount.iteritems() if v > 5)
     fig = plt.figure()
     plt.bar(range(len(final)), final.values(), align='center')
-    plt.xticks(range(len(final)), final.keys(), rotation=85)
+    plt.xticks(range(len(final)), final.keys(), rotation=90)
+    plt.tight_layout()
     fig.savefig(txtfile[:-4] +'3'+'.png')
 
 
@@ -60,15 +63,17 @@ first_dirs= ['text_data/'+x for x in os.listdir("text_data") if x.endswith('.txt
 second_dirs = ['text_data2/'+x for x in os.listdir("text_data2") if x.endswith('.txt')]
 
 for file in first_dirs:
-    visualize(file)
-    cloud(file)
+    #visualize(file)
+    #cloud(file)
     histogram(file)
 
 for file in second_dirs:
-    visualize(file)
-    cloud(file)
+    #visualize(file)
+    #cloud(file)
     histogram(file)
 
+
+#print STOPWORDS
 
 #filen = 'text_data/Sushi.txt'
 
