@@ -1,7 +1,7 @@
 #http://www.python-course.eu/text_classification_python.php
 import re, os
 import matplotlib.pyplot as plt
-
+from sklearn.metrics import accuracy_score
 class BagOfWords(object):
     """ Implementing a bag of words, words corresponding with their frequency of usages in a "document"
     for usage by the Document class, DocumentClass class and the Pool class."""
@@ -220,13 +220,13 @@ class Pool(object):
         plt.tight_layout()
         plt.show()
 
-DClasses = [ "ML",  "Microsoft"]
+DClasses = list(os.walk('dumb/'))[0][1]
 
-base = "dumb/"
+base = "train/"
 p = Pool()
 for i in DClasses:
     p.learn(base + i, i)
-base = "dumb2/"
+base = "testset/"
 '''
 for i in DClasses:
     dir = os.listdir(base + i)
@@ -235,7 +235,14 @@ for i in DClasses:
         #print(i + ": " + file + ": " + str(res))
         print str(res)
 '''
-
+predicted = []
+real = []
 for file in os.listdir(base):
     res = p.Probability(base+file)
     print file, str(res)
+    predicted.append(res[0][0])
+    real.append(re.findall("(.*?)[\d]",file)[0])
+    #results.append(res)
+
+print accuracy_score(real, predicted)
+
